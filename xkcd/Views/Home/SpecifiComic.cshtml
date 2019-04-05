@@ -1,0 +1,38 @@
+﻿
+@{
+    ViewBag.Title = "XKCD";
+}
+
+@model xkcd.ViewModels.ComicOfTheDay
+
+@helper ShowIfNotNull(string header)
+{
+    if (!string.IsNullOrEmpty(header))
+    {
+        <h2>@header</h2>
+    }
+
+}
+
+
+        <div class="jumbotron">
+            <h1>XKCD</h1>
+            <div class="row">
+                @if (Model != null)
+                {
+                    <h1>@ShowIfNotNull(Model.title)</h1>
+                    <img src="@Url.Content(Model.img)" alt="@Model.alt" />
+                    <h2> @Model.alt </h2>
+                }
+            </div>
+            @{
+                var idComic = Model.num - 1;
+                if (Model.prev >= 1) { 
+                    @Html.ActionLink("Previous", "SpecifiComic", "Home", new { comicId = Model.prev }, new { @class = "btn btn-primary btn-large" })
+                }
+                @Html.ActionLink("Next", "SpecifiComic", "Home", new { comicId = Model.next }, new { @class = "btn btn-primary btn-large" })
+
+
+            }
+
+        </div>
